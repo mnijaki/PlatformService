@@ -50,6 +50,11 @@ namespace PlatformService
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+			
+			// Prepare the database.
+			// Used only for testing purposes.
+			// DO NOT USE IN PRODUCTION !!!
+			DbPreparer.PrepareDatabase(app);
 		}
 	}
 }
