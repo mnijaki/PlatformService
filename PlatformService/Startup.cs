@@ -7,6 +7,9 @@ using Microsoft.OpenApi.Models;
 
 namespace PlatformService
 {
+	using Data;
+	using Microsoft.EntityFrameworkCore;
+
 	public class Startup
 	{
 		public Startup(IConfiguration configuration)
@@ -16,14 +19,18 @@ namespace PlatformService
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
+		// This method gets called by the runtime.
+		// Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// Inject Context to the container.
+			services.AddDbContext<Ctx>(options => options.UseInMemoryDatabase("InMemoryDB"));
 			services.AddControllers();
 			services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlatformService", Version = "v1" }); });
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		// This method gets called by the runtime.
+		// Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if(env.IsDevelopment())
