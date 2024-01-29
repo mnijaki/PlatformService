@@ -25,6 +25,9 @@ namespace PlatformService
 		{
 			// Inject Context to the container.
 			services.AddDbContext<Ctx>(options => options.UseInMemoryDatabase("InMemoryDB"));
+			// Inject PlatformRepo to the container as IRepo.
+			services.AddScoped<IRepo, PlatformRepo>();
+			
 			services.AddControllers();
 			services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlatformService", Version = "v1" }); });
 		}
