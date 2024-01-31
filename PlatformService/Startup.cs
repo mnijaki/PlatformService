@@ -7,6 +7,8 @@ using Microsoft.OpenApi.Models;
 
 namespace PlatformService
 {
+	using System;
+	using AutoMapper;
 	using Data;
 	using Microsoft.EntityFrameworkCore;
 
@@ -27,8 +29,13 @@ namespace PlatformService
 			services.AddDbContext<Ctx>(options => options.UseInMemoryDatabase("InMemoryDB"));
 			// Inject PlatformRepo to the container as IRepo.
 			services.AddScoped<IRepo, PlatformRepo>();
-			
+			// Inject AutoMapper to the container passing all assemblies as parameters.
+			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+			// Inject Controllers to the container.
+			// It allows to use Controllers in application.
 			services.AddControllers();
+			// Inject Swagger to the container.
+			// Swagger is used for API documentation.
 			services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlatformService", Version = "v1" }); });
 		}
 
